@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
@@ -267,23 +267,19 @@
 (function(){
 'use strict';
 
-/* ---------------- 1. 静态数据：你这学期的 14 节 ---------------- */
-// wd: 1=周一 … 5=周五
+/* ---------------- 1. 静态数据：你这学期的 10 节讲演 ---------------- */
+// wd: 1=周一 … 5=周五  · 只保留讲演（指导教学已按需求移除）
 var SESSIONS = [
-  {id:'mis-mon',    code:'MIS 2011', sec:'L01', type:'讲演',     wd:1, s:'13:30', e:'14:50', room:'Teaching C Building 308'},
-  {id:'fin08-mon',  code:'FIN 3080', sec:'L02', type:'讲演',     wd:1, s:'15:30', e:'16:50', room:'Teaching Complex C303'},
-  {id:'dda-tue',    code:'DDA 3020', sec:'L01', type:'讲演',     wd:2, s:'13:30', e:'14:50', room:'Teaching Complex C201'},
-  {id:'fin08-tue',  code:'FIN 4080', sec:'L01', type:'讲演',     wd:2, s:'18:00', e:'19:20', room:'Teaching Complex A401'},
-  {id:'csc-wed',    code:'CSC 3160', sec:'L01', type:'讲演',     wd:3, s:'10:30', e:'11:50', room:'Teaching Complex D106'},
-  {id:'mis-wed',    code:'MIS 2011', sec:'L01', type:'讲演',     wd:3, s:'13:30', e:'14:50', room:'Teaching C Building 308'},
-  {id:'fin08-wed',  code:'FIN 3080', sec:'L02', type:'讲演',     wd:3, s:'15:30', e:'16:50', room:'Teaching Complex C303'},
-  {id:'fin08-wed-t',code:'FIN 3080', sec:'T01', type:'指导教学', wd:3, s:'19:00', e:'19:50', room:'Teaching Complex C401'},
-  {id:'dda-wed-t',  code:'DDA 3020', sec:'T02', type:'指导教学', wd:3, s:'20:00', e:'20:50', room:'Teaching D Building 206'},
-  {id:'dda-thu',    code:'DDA 3020', sec:'L01', type:'讲演',     wd:4, s:'13:30', e:'14:50', room:'Teaching Complex C201'},
-  {id:'fin08-thu',  code:'FIN 4080', sec:'L01', type:'讲演',     wd:4, s:'18:00', e:'19:20', room:'Teaching Complex A401'},
-  {id:'csc-thu-t',  code:'CSC 3160', sec:'T02', type:'指导教学', wd:4, s:'20:00', e:'20:50', room:'Teaching C Building 206'},
-  {id:'csc-fri',    code:'CSC 3160', sec:'L01', type:'讲演',     wd:5, s:'10:30', e:'11:50', room:'Teaching Complex D106'},
-  {id:'fin08-fri-t',code:'FIN 4080', sec:'T01', type:'指导教学', wd:5, s:'19:00', e:'19:50', room:'Teaching A Building 307'}
+  {id:'mis-mon',    code:'MIS 2011', sec:'L01', type:'讲演', wd:1, s:'13:30', e:'14:50', room:'Teaching C Building 308'},
+  {id:'fin08-mon',  code:'FIN 3080', sec:'L02', type:'讲演', wd:1, s:'15:30', e:'16:50', room:'Teaching Complex C303'},
+  {id:'dda-tue',    code:'DDA 3020', sec:'L01', type:'讲演', wd:2, s:'13:30', e:'14:50', room:'Teaching Complex C201'},
+  {id:'fin08-tue',  code:'FIN 4080', sec:'L01', type:'讲演', wd:2, s:'18:00', e:'19:20', room:'Teaching Complex A401'},
+  {id:'csc-wed',    code:'CSC 3160', sec:'L01', type:'讲演', wd:3, s:'10:30', e:'11:50', room:'Teaching Complex D106'},
+  {id:'mis-wed',    code:'MIS 2011', sec:'L01', type:'讲演', wd:3, s:'13:30', e:'14:50', room:'Teaching C Building 308'},
+  {id:'fin08-wed',  code:'FIN 3080', sec:'L02', type:'讲演', wd:3, s:'15:30', e:'16:50', room:'Teaching Complex C303'},
+  {id:'dda-thu',    code:'DDA 3020', sec:'L01', type:'讲演', wd:4, s:'13:30', e:'14:50', room:'Teaching Complex C201'},
+  {id:'fin08-thu',  code:'FIN 4080', sec:'L01', type:'讲演', wd:4, s:'18:00', e:'19:20', room:'Teaching Complex A401'},
+  {id:'csc-fri',    code:'CSC 3160', sec:'L01', type:'讲演', wd:5, s:'10:30', e:'11:50', room:'Teaching Complex D106'}
 ];
 
 // 课程配色 / 章面缩写
@@ -815,7 +811,7 @@ function renderSettings(){
       '<button data-notif="1" class="'+(S.notifOn?'on':'')+'">开</button>'+
       '<button data-notif="0" class="'+(S.notifOn?'':'on')+'">关</button>'+
     '</div></div></div>'+
-  '<button class="btn dark" data-act="ics">导出日历 .ics（14 条重复事件 + 双提醒）</button>'+
+  '<button class="btn dark" data-act="ics">导出日历 .ics（'+SESSIONS.length+' 条重复事件 + 双提醒）</button>'+
   '<button class="btn" data-act="demo">生成示例数据（看「回顾」长什么样）</button>'+
   '<button class="btn" data-act="exportJson">导出我的记录（JSON）</button>'+
   '<button class="btn" data-act="importJson">导入记录（JSON）</button>'+
@@ -982,7 +978,7 @@ function downloadICS(){
   // 折行符合 RFC5545
   var text = L.join('\r\n');
   dl(text, 'course-schedule.ics', 'text/calendar;charset=utf-8');
-  showToast('已导出 .ics · 14 节课 × '+semWeeks()+' 周', null, null);
+  showToast('已导出 .ics · '+SESSIONS.length+' 节课 × '+semWeeks()+' 周', null, null);
 }
 function utf8(s){
   // .ics 文本字段按 RFC 可以直出 UTF-8；这里做一次折行保护
